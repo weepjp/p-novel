@@ -1,31 +1,27 @@
-# p-novel
+# なろカクレット( #syokaklet )
 
 
 ![image](https://github.com/user-attachments/assets/3d1898f8-0efb-4b52-9e39-8018761a100c)
 
 
-名称はてきとーです。
+　名称はてきとーです（旧名「p-novel」でしたが、カクヨムにも対応させたので、この名前に）。
 
-##
+## Summary
 
-「小説家になろう」のエピーソードページ内（```.p-novel～``` が存在する場合）のタイトルと本文をコピペしたい時用に使ういやらしいブックマークレットです。
+　「[小説家になろう](https://syosetu.com/)」及び「[カクヨム](https://kakuyomu.jp/)」の エピーソードページ内の「<b>サブタイトル(エピソードタイトル？)</b>」と「<b>本文</b>」を <u>コピペしたい時用に使う嫌らしいブックマークレット</u>です。
 
-ダイアログにタイトルと文字数と行数（ざっくり数値）を表示させタイトルと本文をコピーするだけのもの。
+　ダイアログにサブタイトルと、文字数と、行数（数値はざっくり）を表示させ、サブタイトルと本文をコピーするだけのもの。
 
-ルビは「読み→文字列」の順で、送り仮名に配慮しているので、コピペしたテキストは読み上げソフト用途を想定。
+　ルビは``【【まほう】】魔法`` となります。送り仮名に配慮してこうしているので、コピペしたテキストは読み上げソフト用途を想定（というかそのために作成）。
 
-面倒なので前書きと後書きも含みます。
+　最後に「。、。」が付きますが、これはおいらが使ってる「読み上げソフト」では、これを付けないと最後の最後で音飛びするため、聴き取れないと困るからの措置です。
 
-推し先生の作品読みのお供にどうぞ。
+　面倒なので「～なろう」前書きと後書きも含みます。推し先生の作品読みのお供にどうぞ。
 
 　
-
-編集する際のプレビューページでも使えそうなので、執筆中の先生方にも最適？
-
-（前書きと後書きが未設定時「＊書きを入力するとここに表示されます」になりますけどね。。。）
 
 ## JavaScript (Bookmarklet)
 
 ```js
-javascript:(()=>{const t=document.querySelector('.p-novel__title'),b=document.querySelector('.p-novel__body');if(!t||!b)return alert("取得不可");let f=n=>{let c=n.cloneNode(true);c.querySelectorAll('ruby').forEach(r=>{let rt=r.querySelector('rt'),rb=[...r.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join(''),y=rt?.innerText.trim()||"",ok=/[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}\p{Alphabetic}\p{Number}]/u.test(y);r.replaceWith(ok?`（${y}）・${rb}`:rb)});return c.innerText};let title=t.innerText,text=title+%27\n\n%27+f(b)+%27\n。。。。%27,lines=text.split(%27\n%27).filter(l=>l.trim()).length,chars=text.length;navigator.clipboard.writeText(text).then(()=>alert(`コピー完了: ${title}\n文字数: ${chars}\n行数: ${lines}`)).catch(e=>alert("コピー失敗: "+e))})();
+javascript:(()=>{const s=document.querySelector('.p-novel__title,p.widget-episodeTitle')?.innerText.trim(),b=document.querySelector(%27.p-novel__body,[data-episode-text],.widget-episodeBody,[itemprop="articleBody"]%27);if(!s||!b)return alert("取得不可");let c=b.cloneNode(true);c.querySelectorAll(%27ruby%27).forEach(r=>{r.querySelectorAll(%27rt%27).forEach(rt=>{rt.innerText=rt.innerText.replace(/[【】]/g,%27%27)});let rt=r.querySelector(%27rt%27)?.innerText.trim()||"",rb=[...r.childNodes].filter(n=>n.nodeType===3||n.tagName==="RB").map(n=>n.textContent).join(%27%27).trim();r.replaceWith(`【【${rt}】】${rb}`)});let f=c.innerText,text=s+%27\n\n%27+f+%27\n。、。\n\n\n%27,lines=text.split(%27\n%27).filter(l=>l.trim()).length,chars=text.length;navigator.clipboard.writeText(text).then(()=>alert(`コピー完了: ${s}\n文字数: ${chars}\n行数: ${lines}`)).catch(e=>alert("コピー失敗: "+e))})();
 ```
