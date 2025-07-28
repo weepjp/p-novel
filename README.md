@@ -1,7 +1,8 @@
 # なろカクレット( #syokaklet )
 
 
-![image](https://github.com/user-attachments/assets/3d1898f8-0efb-4b52-9e39-8018761a100c)
+<img width="460" height="240" alt="image" src="https://github.com/user-attachments/assets/93557b59-b181-4a35-9436-156b778d42bc" />
+
 
 
 　名称はてきとーです（旧名「p-novel」でしたが、カクヨムにも対応させたので、この名前に）。
